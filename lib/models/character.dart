@@ -1,11 +1,11 @@
 class Character {
   final String name;
-  final String imageId;
+  final int imageId;
   final int id;
 
   Character({
     required this.name,
-    this.imageId = 'no-image',
+    this.imageId = -9,
     required this.id
   });
 }

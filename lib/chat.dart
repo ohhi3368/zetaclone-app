@@ -32,7 +32,7 @@ class _ChatMainState extends State<ChatMain> {
             Expanded(
               flex: 1,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 color: darkMode ? darkModeColor : lightModeColor,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
@@ -41,35 +41,46 @@ class _ChatMainState extends State<ChatMain> {
                     itemBuilder: (context, index){
                       final message = widget.messages[index];
                       bool isMe = message.sender.speakerType == SpeakerType.user;
+                      debugPrint('http://ohhi919.kro.kr/image/${message.sender.character?.imageId.toString()}');
                       return Container(
-                        margin: EdgeInsets.only(top: 8),
+                        margin: EdgeInsets.only(top: 10),
                         child: Row(
                           mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if(!isMe)
                             CircleAvatar(
-                              backgroundImage: Image.network(message.sender.id.toString()).image,
+                              backgroundImage: Image.network('http://ohhi919.kro.kr/image/${message.sender.character?.imageId.toString()}').image,
                               radius: 20.0,
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0),
-                                  bottomLeft: Radius.circular(isMe ? 20.0 : 0.0),
-                                  bottomRight: Radius.circular(isMe ? 0.0 : 20.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if(!isMe)
+                                Container(
+                                  margin: EdgeInsets.only(left: 10.0),
+                                  child: Text(message.sender.name, style: TextStyle(color: darkMode ? lightModeColor : darkModeColor)),
                                 ),
-                                color: isMe ? const Color.fromARGB(255, 7, 123, 255) : Colors.grey,
-                              ),
-                              
-                              padding: EdgeInsets.all(10),
-                              constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width * 0.5
-                              ),
-                              margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                              child: Text(widget.messages[index].text, style: TextStyle(color: darkMode ? lightModeColor : darkModeColor))
-                            ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(isMe ? 14.0 : 2),
+                                      topRight: Radius.circular(isMe ? 2 : 14.0),
+                                      bottomLeft: Radius.circular(14.0),
+                                      bottomRight: Radius.circular(14.0),
+                                    ),
+                                    color: isMe ? const Color.fromARGB(255, 7, 123, 255) : const Color.fromARGB(255, 63, 63, 63),
+                                  ),
+                                  
+                                  padding: EdgeInsets.all(10),
+                                  constraints: BoxConstraints(
+                                    maxWidth: MediaQuery.of(context).size.width * 0.7
+                                  ),
+                                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                                  child: Text(widget.messages[index].text, style: TextStyle(color: darkMode ? lightModeColor : darkModeColor))
+                                ),
+                              ],
+                            )
                           ],
                         ));
                     },
